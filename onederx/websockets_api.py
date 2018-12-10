@@ -9,6 +9,9 @@ import websockets
 from decimal import Decimal
 from collections import deque
 
+
+DEBUG = False
+
 class OnederxWebsockets:
     def __init__(self, user_callback, base_url, api_key=None, secret=None):
         self.user_callback = user_callback
@@ -146,7 +149,8 @@ class OnederxWebsockets:
                 while True:
                     while self.msg_queue:
                         msg_to_sent = self.msg_queue.popleft()
-                        print("SENDING:", msg_to_sent)
+                        if DEBUG:
+                            print("SENDING:", msg_to_sent)
                         await ws.send(msg_to_sent)
 
                     msg = await ws.recv()
