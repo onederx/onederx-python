@@ -46,6 +46,7 @@ class OnederxREST:
         return result.json()
 
     # Public endpoints
+    
     def get_status(self):
         return self._get_json("/v1/status")
 
@@ -75,7 +76,7 @@ class OnederxREST:
         }
         return self._get_json("/v1/candles", data=payload)
 
-    # Private methods
+    # Private endpoints
 
     def _signature_payload(self, url, payload_string):
         string_to_sign = url + payload_string
