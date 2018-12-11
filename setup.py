@@ -6,7 +6,7 @@ setup(
     description='REST and Websockets API for Onederx - Crypto derivatives exchange',
     license='MIT',
     packages=['onederx'],
-    install_requires=['websockets >= 6.0'],
+    install_requires=['websockets >= 6.0', 'requests'],
     author='Onederx',
     keywords=['onederx', 'onederx-api', 'futures', 'derivative', 'leverage', 'client', 'api', 'trade', 'bitcoin', 'BTC', 'ethereum', 'ETH', 'wrapper', 'exchange', 'crypto', 'currency', 'trading', 'trading-api'],
     url='https://github.com/onederx/onederx-python'
