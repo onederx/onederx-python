@@ -36,9 +36,9 @@ class OnederxWebsockets:
         self.msg_queue.append(json.dumps(msg))
         return cl_req_id
 
-    def _subscribe(self, callback, channel, **kargs):
+    def _subscribe(self, callback, channel, **kwargs):
         payload = {"channel": channel}
-        payload["params"] = kargs
+        payload["params"] = kwargs
         key = (channel, frozenset(payload["params"].items()))
         self.callbacks_map[key] = callback
         return self._send("subscribe", payload={"subscriptions":[payload]})
@@ -137,8 +137,6 @@ class OnederxWebsockets:
 
     def subscribe_positions(self, callback):
         return self._subscribe(callback, "positions")
-
-
 
     ### Async WS ###
 
