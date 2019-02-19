@@ -13,7 +13,7 @@ Python 2 is not supported due to lack of `asyncio` support.
 ## Installing
 You can install or upgrade onederx-python with:
 
-`$ pip install onederx-python --upgrade`
+`$ pip install onederx --upgrade`
 
 ## REST API example
 ```python
