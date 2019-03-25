@@ -64,7 +64,7 @@ rest_api.cancel_all_orders("BTCUSD_P")
 rest_api.get_balances()
 ```
 
-# Websockets API example 
+## Websockets API example 
 ```python
 from onederx import OnederxWebsockets
 
