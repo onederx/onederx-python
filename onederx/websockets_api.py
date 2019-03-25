@@ -118,6 +118,9 @@ class OnederxWebsockets:
     def subscribe_candles(self, callback, symbol, resolution):
         return self._subscribe(callback, "candles", symbol=symbol, resolution=resolution)
 
+    def subscribe_index(self, callback, name):
+        return self._subscribe(callback, "index", name=name)
+
     ### Subscribe to private ###
 
     def subscribe_trades_private(self, callback, symbol):
