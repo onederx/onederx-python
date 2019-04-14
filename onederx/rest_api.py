@@ -134,9 +134,17 @@ class OnederxREST:
             price,
             volume,
             order_type,
-            time_in_force,
-            is_post_only,
-            is_stop):
+            time_in_force=None,
+            is_post_only=False,
+            is_stop=False):
+
+        if order_type == "limit":
+            if time_in_force is None:
+                raise ValueError("time_in_force must be set for orders with order_type='limit'")
+        elif order_type == "market":
+            if time_in_force is not None:
+                raise ValueError("time_in_force must be None for orders with order_type='market'")
+
         def to_str(x): return str(Decimal(x))
         payload = {
             "volume": to_str(volume),

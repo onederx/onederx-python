@@ -76,7 +76,7 @@ class OnederxWebsockets:
     def get_symbol_details(self):
         return self._send("symbol_details")
 
-    def new_order(self, symbol, my_id, side, price, volume, order_type, time_in_force, is_post_only, is_stop):
+    def new_order(self, symbol, my_id, side, price, volume, order_type, time_in_force=None, is_post_only=False, is_stop=False):
         to_str = lambda x: str(Decimal(x))
         payload = {
             "symbol": symbol,
@@ -89,6 +89,13 @@ class OnederxWebsockets:
             "stop": is_stop,
             "cl_ord_id": str(my_id)
         }
+
+        if order_type == "limit":
+            if time_in_force is None:
+                raise ValueError("time_in_force must be set for orders with order_type='limit'")
+        elif order_type == "market":
+            if time_in_force is not None:
+                raise ValueError("time_in_force must be None for orders with order_type='market'")
         return self._send("order_new", payload, use_cl_req=True)
 
     def cancel_order(self, symbol, order_id):
