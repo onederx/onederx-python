@@ -169,6 +169,7 @@ class OnederxWebsockets:
             traceback.print_exc()
             raise
 
+    # Please use this function only for testing. The right way is to use `run_async` async method.
     def run_in_thread(self):
         import threading
 
