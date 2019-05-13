@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='onederx',
-    version='0.0.4',
+    version='0.0.5',
     description='REST and Websockets API for Onederx - Crypto derivatives exchange',
     license='MIT',
     packages=['onederx'],

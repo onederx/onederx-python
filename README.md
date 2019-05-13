@@ -1,5 +1,5 @@
 # onederx-python
-[![PyPI version](https://img.shields.io/badge/pypi-v.0.0.4-green.svg)](https://pypi.org/project/onederx/)
+[![PyPI version](https://img.shields.io/badge/pypi-v.0.0.5-green.svg)](https://pypi.org/project/onederx/)
 [![Python support](https://img.shields.io/badge/python-3.6%20%7C%203.7%2B-green.svg)](https://www.python.org/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
