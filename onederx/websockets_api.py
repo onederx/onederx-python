@@ -7,8 +7,6 @@ import asyncio
 import websockets
 
 from decimal import Decimal
-from collections import deque
-
 
 DEBUG = False
 
@@ -19,7 +17,7 @@ class OnederxWebsockets:
         self.api_key = api_key
         self.secret = secret
         self.cl_req_id_num = 0
-        self.msg_queue = deque()
+        self.msg_queue = asyncio.Queue()
         self.callbacks_map = {}
 
     def _get_req_id(self):
@@ -33,7 +31,7 @@ class OnederxWebsockets:
             if use_cl_req:
                 payload["cl_req_id"] = cl_req_id
             msg["payload"] = payload
-        self.msg_queue.append(json.dumps(msg))
+        self.msg_queue.put_nowait(json.dumps(msg))
         return cl_req_id
 
     def _subscribe(self, callback, channel, **kwargs):
@@ -151,19 +149,23 @@ class OnederxWebsockets:
     ### Async WS ###
 
     async def _run_websocket(self):
+        async def read_loop(ws):
+            while True:
+                msg = await ws.recv()
+                msg = json.loads(msg)
+                self._callback(msg)
+
+        async def send_loop(ws):   
+            while True:
+                msg_to_sent = await self.msg_queue.get()
+                if DEBUG:
+                    print("SENDING:", msg_to_sent)
+                await ws.send(msg_to_sent)
+
         # TODO -- handle errors better
         try:
             async with websockets.connect(self.base_url + "/v1/ws", max_size=2**28) as ws:
-                while True:
-                    while self.msg_queue:
-                        msg_to_sent = self.msg_queue.popleft()
-                        if DEBUG:
-                            print("SENDING:", msg_to_sent)
-                        await ws.send(msg_to_sent)
-
-                    msg = await ws.recv()
-                    msg = json.loads(msg)
-                    self._callback(msg)
+                await asyncio.gather(read_loop(ws), send_loop(ws))
         except:
             import traceback
             traceback.print_exc()
